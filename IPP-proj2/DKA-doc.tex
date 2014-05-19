@@ -1,0 +1,36 @@
+\documentclass[12pt,a4paper,final]{article}
+
+\usepackage[czech]{babel}
+%\usepackage{fontspec}
+\usepackage[utf8]{inputenc}
+\usepackage[top=3.5cm, left=2.5cm, text={17cm, 24cm}, ignorefoot]{geometry}
+
+%\setmainfont{Times New Roman}
+
+\begin{document}
+
+\noindent
+\texttt{Task documentation DKA: Determinization of finite automaton in Python 3 for IPP 2013/2014} \\
+\texttt{Name and surname: Marek Milkovič} \\
+\texttt{Login: xmilko01}
+
+\section{Assignment}
+The task was to create a script for determinization of the finite automaton, including the removal of $\varepsilon$-rules and lexical, syntactic and semantic validation of the input finite automaton.
+
+\section{Design}
+\subsection{Lexical analysis}
+Since the syntax of writing finite automata is not much predictable, because of the presence of comments and previously uknown count of whitespaces, it is hard to parse out lexical units (tokens) with just regular expressions. The design of two-step lexical analysis provides solution for this problem. The steps are:
+\begin{enumerate}
+    \item Finite automaton which parse out individual sets (sets of 5-tuple) from the input finite automaton.
+    \item Regular expressions which parse out individual members of the sets
+\end{enumerate}
+\subsection{Syntactic analysis}
+Syntactic analysis is performed with cooperation of lexical analysis, where the token from the lexical analyzer is compared with the expected token type. The part of the syntax analysis is also performed directly inside the lexical analyzator because the later analyzation would require additional parsing because of the way how the information are stored.
+\subsection{Semantic analysis}
+Semantic analysis is mixed into the lexical and syntactic analysis and is performed when all required data for semantic analyzation are parsed.
+\subsection{Epsilon rules}
+Construction of $\varepsilon$-closure and removal of $\varepsilon$-moves is perfmored in a single algorithm using the stack of states to visit and the list of the already visited states. For the currently iterated state, all $\varepsilon$-moves are removed and replaced by regular moves using the stack. Currently iterated state is then put into the list of the already visited states. Then the next state is iterated.
+\subsection{Determinization}
+Algorithm for determinization of finite automaton is slightly different than common algorithm. It doesn't iterate over the symbols in the alphabet but instead it iterates states, starting from the starting state. The structure of the automaton in the script is made that every state contains dictionary of rules with key as an accepted symbol and value as all the states where it can move with this rule. Iterating over this dictionary provides easy way how to distiguish non-determinism and removes it by merging states together. As the removal of epsilon rules, determinization also uses stack of the states to visit and the list of the already visited states. Since every state contains the list of the states it was made up with, it is easy to decide which states to visit to build up deterministic finite automaton.
+
+\end{document}

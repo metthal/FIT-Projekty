@@ -1,0 +1,18 @@
+CMSG_HANDSHAKE_REQUEST
+    - uint16 magic - 1337
+
+SMSG_HANDSHAKE_RESPONSE
+    - uint16 magic - 42
+
+CMSG_DOWNLOAD_REQUEST
+    - string path - path to the file to download
+
+SMSG_DOWNLOAD_RESPONSE
+    - uint8 result - 1 for OK, 0 for ERROR
+    - uint64 fileSize - size of the file
+
+SMSG_DOWNLOAD_DATA
+    - buffer data - data of the file
+
+XMSG_FAREWELL
+    - no data
