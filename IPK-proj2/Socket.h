@@ -198,6 +198,8 @@ public:
                     {
                         m_recvPacketQueue.push(m_pendingPacket);
                         m_pendingPacket = nullptr;
+                        timeoutCount = 0;
+                        maxTimeoutCount = 20;
                         SetRecvTimeout(0, 500);
                     }
                     else

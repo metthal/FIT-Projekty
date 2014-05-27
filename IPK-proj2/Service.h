@@ -44,7 +44,7 @@ protected:
 
         if (!packet)
         {
-            bool active = socket->Recv(10);
+            bool active = socket->Recv(50);
             packet = socket->GetReceivedPacket();
             if (!active && !packet)
                 return nullptr;
